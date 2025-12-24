@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Anti-Scroll Dashboard (Free Alternatives)</title>
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#101a2e; --card:#121f38; --border:#243457;
+      --text:#e8eefc; --muted:#b8c6ea; --accent:#7aa2ff; --accent2:#34d399;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; font-family:var(--font); color:var(--text); background:radial-gradient(1200px 700px at 15% 10%, #152a5a 0%, var(--bg) 55%);
+      min-height:100vh;
+    }
+    header{
+      padding:28px 18px 14px;
+      max-width:1200px; margin:0 auto;
+    }
+    .top{
+      display:flex; gap:14px; align-items:flex-end; justify-content:space-between; flex-wrap:wrap;
+    }
+    h1{ margin:0; font-size:28px; letter-spacing:.2px; }
+    .sub{ margin:6px 0 0; color:var(--muted); line-height:1.4; max-width:72ch; }
+    .controls{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .pill{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      padding:10px 12px; border-radius:999px; box-shadow:var(--shadow);
+      display:flex; gap:8px; align-items:center;
+    }
+    .pill input, .pill select{
+      background:transparent; border:none; outline:none; color:var(--text);
+      font-size:14px; min-width:220px;
+    }
+    .pill select{ min-width:200px; }
+    .pill input::placeholder{ color:rgba(232,238,252,.55); }
+    main{
+      max-width:1200px; margin:0 auto; padding:0 18px 28px;
+    }
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns:repeat(12,1fr);
+      margin-top:16px;
+    }
+    .section{
+      grid-column:span 12;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:var(--shadow);
+    }
+    .section-head{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      padding:6px 6px 12px;
+    }
+    .section h2{ margin:0; font-size:16px; letter-spacing:.25px; }
+    .count{ color:var(--muted); font-size:13px; }
+    .cards{
+      display:grid; gap:12px;
+      grid-template-columns:repeat(12, 1fr);
+    }
+    .card{
+      grid-column:span 12;
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:14px;
+      display:flex; flex-direction:column; gap:10px;
+      transition:transform .15s ease, border-color .15s ease;
+    }
+    @media(min-width:680px){
+      .card{ grid-column:span 6; }
+    }
+    @media(min-width:980px){
+      .card{ grid-column:span 4; }
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      border-color:rgba(122,162,255,.45);
+    }
+    .tagline{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .title{
+      font-weight:650; font-size:15px; margin:0;
+      display:flex; gap:8px; align-items:center;
+    }
+    .badge{
+      font-size:12px; color:#06121f;
+      background:linear-gradient(90deg, var(--accent2), #60a5fa);
+      padding:3px 8px; border-radius:999px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .desc{ margin:0; color:var(--muted); line-height:1.45; font-size:13.5px; }
+    a.button{
+      margin-top:auto;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:10px 12px; border-radius:12px; text-decoration:none;
+      background:rgba(122,162,255,.14);
+      border:1px solid rgba(122,162,255,.35);
+      color:var(--text);
+      font-weight:650; font-size:13.5px;
+    }
+    a.button:hover{ background:rgba(122,162,255,.20); }
+    footer{
+      max-width:1200px; margin:0 auto; padding:0 18px 26px; color:rgba(232,238,252,.65);
+      font-size:12.5px; line-height:1.45;
+    }
+    .hint{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px; padding:12px 14px;
+    }
+    .kbd{
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(0,0,0,.25);
+      padding:2px 6px; border-radius:6px;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px; color:rgba(232,238,252,.9);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="top">
+      <div>
+        <h1>Anti-Scroll Dashboard</h1>
+        <p class="sub">
+          Free alternatives to mindless Facebook scrolling: bite-sized learning, quality videos, skill-building, and focus tools.
+          Use search + category filter to keep it intentional.
+        </p>
+      </div>
+
+      <div class="controls">
+        <div class="pill" title="Search resources">
+          <span aria-hidden="true">🔎</span>
+          <input id="search" type="search" placeholder="Search (ex: science, focus, book) …" />
+        </div>
+
+        <div class="pill" title="Filter by category">
+          <span aria-hidden="true">🏷️</span>
+          <select id="category">
+            <option value="all">All categories</option>
+            <option value="learning">Learning (Courses)</option>
+            <option value="video">Educational Video</option>
+            <option value="summaries">Summaries (Books/Ideas)</option>
+            <option value="reading">Curated Reading</option>
+            <option value="skills">Skill-Building</option>
+            <option value="focus">Focus / Habit</option>
+            <option value="communities">Communities</option>
+          </select>
+        </div>
+
+        <div class="pill" title="Keyboard shortcut">
+          <span aria-hidden="true">⌨️</span>
+          <span style="color:var(--muted); font-size:13px;">Press <span class="kbd">/</span> to search</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="section-head">
+        <h2>Resources</h2>
+        <div class="count"><span id="shownCount">0</span> shown</div>
+      </div>
+
+      <div class="cards" id="cards"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="hint">
+      <strong>Use this as a replacement loop:</strong>
+      open dashboard → pick 1 resource → consume 10–20 minutes → stop.
+      If you want, set a phone timer and treat it like a “session,” not a feed.
+    </div>
+  </footer>
+
+  <script>
+    // Add/edit resources here.
+    const resources = [
+      // --- From our earlier list ---
+      {
+        name: "Khan Academy",
+        url: "https://www.khanacademy.org/",
+        category: "learning",
+        badge: "Free",
+        desc: "Structured lessons and short videos across math, science, history, and more. Great for 10-minute learning sprints."
+      },
+      {
+        name: "OpenLearn (Open University)",
+        url: "https://www.open.edu/openlearn/",
+        category: "learning",
+        badge: "Free",
+        desc: "Free micro-courses and articles from The Open University. Good for quick, purposeful reading."
+      },
+      {
+        name: "TrueTube",
+        url: "https://truetube.co.uk/",
+        category: "video",
+        badge: "Curated",
+        desc: "Thoughtful documentary-style educational videos designed to reduce addictive browsing."
+      },
+      {
+        name: "YouTube: Smarter Every Day",
+        url: "https://www.youtube.com/@smartereveryday",
+        category: "video",
+        badge: "Channel",
+        desc: "High-quality science/engineering videos with real experiments and clear explanations."
+      },
+      {
+        name: "YouTube: Veritasium",
+        url: "https://www.youtube.com/@veritasium",
+        category: "video",
+        badge: "Channel",
+        desc: "Science videos focused on counterintuitive ideas, experiments, and research stories."
+      },
+      {
+        name: "YouTube: Kurzgesagt",
+        url: "https://www.youtube.com/@kurzgesagt",
+        category: "video",
+        badge: "Channel",
+        desc: "Animated explanations of big science topics. Great when you want clear, high-level understanding fast."
+      },
+      {
+        name: "YouTube: CGP Grey",
+        url: "https://www.youtube.com/@CGPGrey",
+        category: "video",
+        badge: "Channel",
+        desc: "Compact explainer videos about systems, politics, history, and decision-making."
+      },
+      {
+        name: "YouTube: CrashCourse",
+        url: "https://www.youtube.com/@crashcourse",
+        category: "video",
+        badge: "Channel",
+        desc: "Fast, structured learning series (history, psychology, science). Watch by playlist for momentum."
+      },
+      {
+        name: "Refind",
+        url: "https://refind.com/",
+        category: "reading",
+        badge: "Mostly free",
+        desc: "Daily curated articles based on your interests. Designed to replace doomscrolling with useful reading."
+      },
+      {
+        name: "StoryShots",
+        url: "https://www.storyshots.com/",
+        category: "summaries",
+        badge: "Freemium",
+        desc: "Book summaries in text/audio formats. Use it when you want the key ideas without the full book."
+      },
+      {
+        name: "Reddit (educational communities)",
+        url: "https://www.reddit.com/",
+        category: "communities",
+        badge: "Free",
+        desc: "Can be high-value if you subscribe narrowly (e.g., r/AskScience, r/TodayILearned, r/Documentaries)."
+      },
+
+      // --- Additional strong free options (no subscription required) ---
+      {
+        name: "Wikipedia ‘Random’",
+        url: "https://en.wikipedia.org/wiki/Special:Random",
+        category: "reading",
+        badge: "Free",
+        desc: "A surprisingly good replacement for a feed: one new topic at a time, no infinite algorithm."
+      },
+      {
+        name: "Project Gutenberg",
+        url: "https://www.gutenberg.org/",
+        category: "reading",
+        badge: "Free",
+        desc: "Free public-domain books. Great for offline reading instead of social media."
+      },
+      {
+        name: "Internet Archive",
+        url: "https://archive.org/",
+        category: "reading",
+        badge: "Free",
+        desc: "Huge library of books, documentaries, and audio. Useful when you want long-form depth."
+      },
+      {
+        name: "freeCodeCamp",
+        url: "https://www.freecodecamp.org/",
+        category: "skills",
+        badge: "Free",
+        desc: "Learn coding in small chunks with projects. Strong alternative when you want progress you can measure."
+      },
+      {
+        name: "Duolingo",
+        url: "https://www.duolingo.com/",
+        category: "skills",
+        badge: "Free tier",
+        desc: "Short daily lessons to build a language habit. Feels like a game without being a scroll trap."
+      },
+      {
+        name: "Pomofocus (Pomodoro Timer)",
+        url: "https://pomofocus.io/",
+        category: "focus",
+        badge: "Free",
+        desc: "Simple browser-based Pomodoro timer. Use it to put a hard boundary around social media time."
+      }
+    ];
+
+    const cardsEl = document.getElementById("cards");
+    const searchEl = document.getElementById("search");
+    const categoryEl = document.getElementById("category");
+    const shownCountEl = document.getElementById("shownCount");
+
+    function render(list){
+      cardsEl.innerHTML = "";
+      list.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.setAttribute("data-category", item.category);
+
+        card.innerHTML = `
+          <div class="tagline">
+            <p class="title">${escapeHtml(item.name)}</p>
+            <span class="badge">${escapeHtml(item.badge || "Free")}</span>
+          </div>
+          <p class="desc">${escapeHtml(item.desc)}</p>
+          <a class="button" href="${item.url}" target="_blank" rel="noopener noreferrer">
+            Open resource <span aria-hidden="true">↗</span>
+          </a>
+        `;
+        cardsEl.appendChild(card);
+      });
+      shownCountEl.textContent = list.length.toString();
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function filter(){
+      const q = searchEl.value.trim().toLowerCase();
+      const cat = categoryEl.value;
+
+      const filtered = resources.filter(r => {
+        const matchesCategory = (cat === "all") || (r.category === cat);
+        const haystack = (r.name + " " + r.desc + " " + r.badge + " " + r.category).toLowerCase();
+        const matchesQuery = !q || haystack.includes(q);
+        return matchesCategory && matchesQuery;
+      });
+
+      render(filtered);
+    }
+
+    // Keyboard shortcut: "/" focuses search
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement !== searchEl) {
+        e.preventDefault();
+        searchEl.focus();
+      }
+    });
+
+    searchEl.addEventListener("input", filter);
+    categoryEl.addEventListener("change", filter);
+
+    // Initial render
+    render(resources);
+  </script>
+</body>
+</html>
