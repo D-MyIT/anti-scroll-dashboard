@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Conversation & Character Dashboard</title>
+  <style>
+    body {
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:#0f172a; color:#e5e7eb;
+    }
+    header, main { max-width:1200px; margin:auto; padding:20px; }
+    h1 { margin-bottom:6px; }
+    p { color:#9ca3af; max-width:800px; }
+    .controls { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    input, select {
+      padding:10px; border-radius:8px; border:none;
+      background:#1f2933; color:#e5e7eb;
+    }
+    .grid {
+      display:grid; gap:16px;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      margin-top:20px;
+    }
+    .card {
+      background:#111827; border:1px solid #1f2937;
+      border-radius:14px; padding:16px;
+      display:flex; flex-direction:column;
+    }
+    .card h3 { margin:0 0 6px; }
+    .badge {
+      background:#2563eb; color:white;
+      padding:3px 8px; border-radius:999px;
+      font-size:12px; width:max-content;
+    }
+    a {
+      margin-top:auto;
+      background:#2563eb; color:white;
+      text-decoration:none;
+      padding:10px; border-radius:10px;
+      text-align:center;
+    }
+    a:hover { background:#3b82f6; }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>Conversation & Character Dashboard</h1>
+  <p>
+    Free, high-signal content designed to make you more thoughtful, grounded,
+    and interesting to talk to — without subscriptions or algorithm traps.
+  </p>
+
+  <div class="controls">
+    <input id="search" placeholder="Search ideas, habits, psychology…" />
+    <select id="filter">
+      <option value="all">All</option>
+      <option value="conversation">Conversation Fuel</option>
+      <option value="social">Social Intelligence</option>
+      <option value="masculinity">Masculine Character</option>
+      <option value="psychology">Psychology & Human Nature</option>
+      <option value="habits">Habits & Discipline</option>
+      <option value="ideas">Ideas Worth Quoting</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<script>
+const resources = [
+  {
+    name:"The Marginalian",
+    category:"ideas",
+    desc:"Essays on meaning, love, science, discipline, creativity. Conversation gold.",
+    link:"https://www.themarginalian.org/"
+  },
+  {
+    name:"Aeon Essays",
+    category:"ideas",
+    desc:"Philosophy, psychology, culture — written to expand how you think.",
+    link:"https://aeon.co/"
+  },
+  {
+    name:"Farnam Street",
+    category:"habits",
+    desc:"Mental models, judgment, discipline, and decision-making.",
+    link:"https://fs.blog/"
+  },
+  {
+    name:"Art of Manliness",
+    category:"masculinity",
+    desc:"Respectful male guidance: confidence, etiquette, resilience, purpose.",
+    link:"https://www.artofmanliness.com/"
+  },
+  {
+    name:"The School of Life",
+    category:"social",
+    desc:"Emotional intelligence, relationships, self-knowledge.",
+    link:"https://www.youtube.com/@TheSchoolOfLife"
+  },
+  {
+    name:"Charisma on Command",
+    category:"conversation",
+    desc:"Communication skills, presence, confidence — without manipulation.",
+    link:"https://www.youtube.com/@CharismaonCommand"
+  },
+  {
+    name:"Big Think",
+    category:"psychology",
+    desc:"Short insights from psychologists, philosophers, scientists.",
+    link:"https://www.bigthink.com/"
+  },
+  {
+    name:"Wait But Why",
+    category:"ideas",
+    desc:"Deep dives into human behavior and modern life, explained simply.",
+    link:"https://waitbutwhy.com/"
+  },
+  {
+    name:"James Clear – Articles",
+    category:"habits",
+    desc:"Habit formation and discipline frameworks from Atomic Habits.",
+    link:"https://jamesclear.com/articles"
+  },
+  {
+    name:"TED Talks (Curated)",
+    category:"conversation",
+    desc:"Idea-dense talks that give instant discussion material.",
+    link:"https://www.ted.com/talks"
+  }
+];
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const filter = document.getElementById("filter");
+
+function render(){
+  grid.innerHTML = "";
+  resources
+    .filter(r =>
+      (filter.value==="all" || r.category===filter.value) &&
+      (r.name+r.desc).toLowerCase().includes(search.value.toLowerCase())
+    )
+    .forEach(r=>{
+      const c=document.createElement("div");
+      c.className="card";
+      c.innerHTML=`
+        <span class="badge">${r.category}</span>
+        <h3>${r.name}</h3>
+        <p>${r.desc}</p>
+        <a href="${r.link}" target="_blank">Open</a>
+      `;
+      grid.appendChild(c);
+    });
+}
+
+search.oninput = render;
+filter.onchange = render;
+render();
+</script>
+</body>
+</html>
